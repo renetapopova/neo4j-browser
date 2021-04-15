@@ -184,6 +184,32 @@ Any queries you run in Neo4j Browser populate your results below the command lin
 Query results are rendered either as a visual graph, a table format, an ascii-table result, and in JSON.
 You can switch between those with the icons on the left side of the result frame.
 
+[NOTE]
+====
+Don’t worry if you don’t see any output.
+You might just be in Graph mode, but had your query return tabular/scalar data.
+To see the results, just switch the mode to the *Table* view.
+====
+
+Query time is reported in the Table or Code views (don’t rely on that exact timing though), and it includes the latency and deserialization costs, not just the actual query execution time.
+
+You can also download the results as a CSV from the Table, Text, and Code views or download the graph as an SVG or PNG from the Graph view, as shown below.
+
+.Export as an image
+[#download_graph]
+[caption="Export as an image"]
+image:download_graph.png[Export as an image]
+
+.Export as a CSV file
+[#download_csv]
+[caption="Export as a CSV file"]
+image:download_csv.png[Export as a CSV file]
+
+If you enter fullscreen mode of a graph visualization, you can zoom in and out.
+After a node is clicked, it gets a halo, where you can expand and remove nodes from the visualization.
+You can also turn previously dragged nodes loose again.
+
+[[graph-view]]
 === Graph
 
 The graph visualization functionality is designed to display a node-graph representation of the underlying data stored in the database in response to a given Cypher query, showing circles for nodes and lines for relationships.
@@ -192,16 +218,18 @@ Anyone reviewing the graph can see the connections, determine areas of interest,
 
 // TODO: take a screenshot of a graph result
 
+[[table-view]]
 === Table
 // TODO: take a screenshot of a tabular result
 
 Even if you feel that the relationship is not hard to find in the tabular format, imagine if we were looking at a graph that contained these individuals' entire filmography careers, as well as hundreds of other actors, directors, and film crew members.
 The connections could easily be lost in a non-visual presentation.
 
+[[text-view]]
 === Text
 // TODO: take a screenshot of a text result
 
-
+[[code-view]]
 === Code
 // TODO: take a screenshot of a code result
 
@@ -436,3 +464,22 @@ You can clear all currently set parameters from Neo4j Browser by running:
 
 // Specific query parameters.
 // Accepted parameters (e.g. connectURL)
+
+
+// == Executing REST requests
+// You can also execute REST requests with Neo4j Browser.
+// The command syntax is :COMMAND /a/path {"some":"data"}. The available commands are :GET, :POST, :PUT and :DELETE.
+//
+// A simple query like :GET /db/data/ inspects the available endpoints of the database, with the returned results formatted in JSON.
+// Then, you can retrieve all labels in the database with :GET /db/data/labels.
+//
+// To execute a Cypher statement, you post to the transaction Cypher endpoint like this:
+//
+// JavaScript
+// Copy to Clipboard
+// :POST /db/data/transaction/commit {"statements":[
+//      {"statement":"MATCH (m:Movie)  WHERE m.title={title} RETURN m.title, m.released, labels(m)",
+//       "parameters":{"title":"Cloud Atlas"}}]}
+// There are endless possibilities to send and retrieve data using REST.
+// In a later guide, you can create an application to interact with Neo4j and use REST endpoints for interaction between you and the database.
+// See the Language Guides section for more information.
